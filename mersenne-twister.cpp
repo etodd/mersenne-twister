@@ -23,6 +23,9 @@
 #include <stdio.h>
 #include "mersenne-twister.h"
 
+namespace mersenne
+{
+
 /*
  * We have an array of 624 32-bit values, and there are
  * 31 unused bits, so we have a seed value of
@@ -104,7 +107,7 @@ static inline void generate_numbers()
   MT[SIZE-1] = MT[PERIOD-1] ^ (y>>1) ^ MATRIX[ODD(y)]; \
 }
 
-extern "C" void seed(uint32_t value)
+void seed(uint32_t value)
 {
   /*
    * The equation below is a linear congruential generator (LCG),
@@ -145,7 +148,7 @@ extern "C" void seed(uint32_t value)
     MT[i] = 0x6c078965*(MT[i-1] ^ MT[i-1]>>30) + i;
 }
 
-extern "C" uint32_t rand_u32()
+uint32_t rand_u32()
 {
   if ( !index )
     generate_numbers();
@@ -164,7 +167,7 @@ extern "C" uint32_t rand_u32()
   return y;
 }
 
-extern "C" int rand()
+int rand()
 {
   /*
    * PORTABILITY WARNING:
@@ -184,42 +187,44 @@ extern "C" int rand()
   return static_cast<int>(0x7FFFFFFF & rand_u32());
 }
 
-extern "C" void srand(unsigned value)
+void srand(unsigned value)
 {
   seed(static_cast<uint32_t>(value));
 }
 
-extern "C" float randf_cc()
+float randf_cc()
 {
   return static_cast<float>(rand_u32())/UINT32_MAX;
 }
 
-extern "C" float randf_co()
+float randf_co()
 {
   return static_cast<float>(rand_u32())/(UINT32_MAX+1.0f);
 }
 
-extern "C" float randf_oo()
+float randf_oo()
 {
   return (static_cast<float>(rand_u32())+0.5f)/(UINT32_MAX+1.0f);
 }
 
-extern "C" double randd_cc()
+double randd_cc()
 {
   return static_cast<double>(rand_u32())/UINT32_MAX;
 }
 
-extern "C" double randd_co()
+double randd_co()
 {
   return static_cast<double>(rand_u32())/(UINT32_MAX+1.0);
 }
 
-extern "C" double randd_oo()
+double randd_oo()
 {
   return (static_cast<double>(rand_u32())+0.5)/(UINT32_MAX+1.0);
 }
 
-extern "C" uint64_t rand_u64()
+uint64_t rand_u64()
 {
   return static_cast<uint64_t>(rand_u32())<<32 | rand_u32();
+}
+
 }

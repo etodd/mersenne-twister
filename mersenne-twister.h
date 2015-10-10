@@ -28,7 +28,8 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C" {
+namespace mersenne
+{
 #endif
 
 /*
@@ -100,7 +101,7 @@ double randd_co();
 double randd_oo();
 
 #ifdef __cplusplus
-} // extern "C"
+} // namespace mersenne
 #endif
 
 #endif // MERSENNE_TWISTER_H
