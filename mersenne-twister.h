@@ -33,11 +33,6 @@ namespace mersenne
 #endif
 
 /*
- * Maximum number you can get from rand().
- */
-#define RAND_MAX INT32_MAX
-
-/*
  * Initialize the number generator with given seed.
  * (LIBC REPLACEMENT FUNCTION)
  */
